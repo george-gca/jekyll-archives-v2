@@ -3,11 +3,11 @@
 require "jekyll"
 
 module Jekyll
-  module Archives
+  module ArchivesV2
     # Internal requires
-    autoload :Archive,  "jekyll-archives/archive"
-    autoload :PageDrop, "jekyll-archives/page_drop"
-    autoload :VERSION,  "jekyll-archives/version"
+    autoload :Archive,  "jekyll-archives-v2/archive"
+    autoload :PageDrop, "jekyll-archives-v2/page_drop"
+    autoload :VERSION,  "jekyll-archives-v2/version"
 
     class Archives < Jekyll::Generator
       safe true

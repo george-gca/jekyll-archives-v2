@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "lib/jekyll-archives/version"
+require_relative "lib/jekyll-archives-v2/version"
 
 Gem::Specification.new do |s|
   s.name        = "jekyll-archives-v2"
   s.summary     = "Collections archives for Jekyll."
   s.description = "Automatically generate collections archives by dates, tags, and categories."
-  s.version     = Jekyll::Archives::VERSION
+  s.version     = Jekyll::ArchivesV2::VERSION
   s.authors     = ["George Corrêa de Araújo"]
 
   s.homepage    = "https://github.com/george-gca/jekyll-archives-v2"

@@ -9,7 +9,7 @@ class TestJekyllArchive < Minitest::Test
         "enabled" => true,
       })
       @site.read
-      Jekyll::Archives::Archives.new(@site.config).generate(@site)
+      Jekyll::ArchivesV2::Archives.new(@site.config).generate(@site)
       @archives = @site.config["archives"]
     end
 

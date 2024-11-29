@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Jekyll
-  module Archives
+  module ArchivesV2
     class PageDrop < Jekyll::Drops::Drop
       extend Forwardable
 

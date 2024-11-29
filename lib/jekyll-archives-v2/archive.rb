@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Jekyll
-  module Archives
+  module ArchivesV2
     class Archive < Jekyll::Page
       attr_accessor :collection_name, :documents, :type, :slug
 
@@ -125,7 +125,7 @@ module Jekyll
 
       # The Liquid representation of this page.
       def to_liquid
-        @to_liquid ||= Jekyll::Archives::PageDrop.new(self)
+        @to_liquid ||= Jekyll::ArchivesV2::PageDrop.new(self)
       end
 
       private

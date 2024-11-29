@@ -9,7 +9,7 @@ class TestJekyllArchives < Minitest::Test
         "enabled" => true,
       })
       @site.read
-      @archives = Jekyll::Archives::Archives.new(@site.config)
+      @archives = Jekyll::ArchivesV2::Archives.new(@site.config)
     end
 
     should "generate archive pages by year" do
@@ -57,7 +57,7 @@ class TestJekyllArchives < Minitest::Test
         "enabled"   => true,
       })
       @site.read
-      @archives = Jekyll::Archives::Archives.new(@site.config)
+      @archives = Jekyll::ArchivesV2::Archives.new(@site.config)
     end
 
     should "generate slugs using the mode specified" do
@@ -232,7 +232,7 @@ class TestJekyllArchives < Minitest::Test
         site = fixture_site("jekyll-archives" => nil)
         site.read
         site.generate
-        assert_nil(site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
+        assert_nil(site.pages.find { |p| p.is_a?(Jekyll::ArchivesV2::Archive) })
       end
     end
 
@@ -243,7 +243,7 @@ class TestJekyllArchives < Minitest::Test
         @site.generate
       end
       refute_includes output, "Archives: Expected a hash but got nil"
-      assert_nil(@site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
+      assert_nil(@site.pages.find { |p| p.is_a?(Jekyll::ArchivesV2::Archive) })
     end
   end
 end
