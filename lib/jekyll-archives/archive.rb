@@ -3,11 +3,12 @@
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
-      attr_accessor :posts, :type, :slug
+      attr_accessor :collection_name, :documents, :type, :slug
 
       # Attributes for Liquid templates
       ATTRIBUTES_FOR_LIQUID = %w(
-        posts
+        collection_name
+        documents
         type
         title
         date
@@ -23,13 +24,15 @@ module Jekyll
       # title - The name of the tag/category or a Hash of the year/month/day in case of date.
       #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
       # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
-      # posts - The array of posts that belong in this archive.
-      def initialize(site, title, type, posts)
+      # collection_name - The name of the collection.
+      # documents - The array of documents that belong in this archive.
+      def initialize(site, title, type, collection_name, documents)
         @site   = site
-        @posts  = posts
+        @documents  = documents
         @type   = type
         @title  = title
-        @config = site.config["jekyll-archives"]
+        @collection_name = collection_name
+        @config = site.config["jekyll-archives"][collection_name]
         @slug   = slugify_string_title
 
         # Use ".html" for file extension and url for path
@@ -61,9 +64,9 @@ module Jekyll
       # desired placeholder replacements. For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
-          @title.merge(:type => @type)
+          @title.merge(:collection => @collection_name, :type => @type)
         else
-          { :name => @slug, :type => @type }
+          { :collection => @collection_name, :name => @slug, :type => @type }
         end
       end
 
