@@ -110,7 +110,7 @@ module Jekyll
 
       # Custom `post_attr_hash` method for years
       def years(documents)
-        date_attr_hash(documents, "%Y")
+        date_attr_hash(documents.docs, "%Y")
       end
 
       # Custom `post_attr_hash` method for months
