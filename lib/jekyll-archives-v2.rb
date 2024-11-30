@@ -85,11 +85,11 @@ module Jekyll
 
       def read_dates(collection_name)
         years(@collections[collection_name]).each do |year, y_documents|
-          append_enabled_date_type({ :year => year }, "year", collection_name, y_posts)
+          append_enabled_date_type({ :year => year }, "year", collection_name, y_documents)
           months(y_documents).each do |month, m_documents|
-            append_enabled_date_type({ :year => year, :month => month }, "month", collection_name, m_posts)
+            append_enabled_date_type({ :year => year, :month => month }, "month", collection_name, m_documents)
             days(m_documents).each do |day, d_documents|
-              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", collection_name, d_posts)
+              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", collection_name, d_documents)
             end
           end
         end
@@ -97,7 +97,7 @@ module Jekyll
 
       # Checks if archive type is enabled in config
       def enabled?(collection_name, archive)
-        @enabled == true || @enabled == "all" || (@enabled.is_a?(Array) && @enabled.include?(archive))
+        @config[collection_name]["enabled"] == true || @config[collection_name]["enabled"] == "all" || (@config[collection_name]["enabled"].is_a?(Array) && @config[collection_name]["enabled"].include?(archive))
       end
 
       def tags(documents)
