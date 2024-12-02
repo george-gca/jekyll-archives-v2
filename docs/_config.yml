@@ -1,5 +1,5 @@
-title: Jekyll Archives
-description: Automatically generate post archives by dates, tags, and categories.
+title: Jekyll Archives V2
+description: Automatically generate collections archives by dates, tags, ,categories, or any other array variable.
 
 permalink: pretty
 

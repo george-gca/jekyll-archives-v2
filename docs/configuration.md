@@ -6,15 +6,14 @@ Archives configuration is done in the site's `_config.yml` file, under the `jeky
 
 ```yml
 jekyll-archives:
-  posts: # the collection name. The same name will be used by default in all permalinks
+  posts: # the collection name. Can be accessed with :collection
     enabled: []
     layout: archive
     permalinks:
-      year: '/COLLECTION/:year/'
-      month: '/COLLECTION/:year/:month/'
-      day: '/COLLECTION/:year/:month/:day/'
-      tag: '/COLLECTION/tag/:name/'
-      category: '/COLLECTION/category/:name/'
+      year: '/:collection/:year/'
+      month: '/:collection/:year/:month/'
+      day: '/:collection/:year/:month/:day/'
+      tags: '/:collection/:type/:name/'
 ```
 
 ### Configuration options
@@ -32,9 +31,9 @@ jekyll-archives:
 
 #### Enabled archives
 
-| Key       | Value type      | Values |
-|-----------|-----------------|--------|
-| `enabled` | String or Array | `'all'` or an array of any combination of `year`, `month`, `day`, `categories`, `tags` |
+| Key       | Value type                | Values |
+|-----------|---------------------------|--------|
+| `enabled` | Boolean, String, or Array | `true`, `'all'`, or an array of any combination of `year`, `month`, `day`, or other array attribute like `tags` or `categories` |
 
 ##### Description
 
@@ -43,6 +42,7 @@ This option sets which types of archives will be created. Must be set to an arra
 ##### Sample values
 
 ```yml
+enabled: true
 enabled: all
 enabled:
   - categories
@@ -77,7 +77,7 @@ layout: custom-archive-layout    # _layouts/custom-archive-layout.html
 
 | Key       | Value type                | Values |
 |-----------|---------------------------|--------|
-| `layouts` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its archive name. |
+| `layouts` | Map, String &rarr; String | A layout or a map of layout type (`year`, `month`, `day`, or other array attribute like `tags` or `categories`) to its archive name. |
 
 ##### Description
 
@@ -100,7 +100,7 @@ layouts:
 
 | Key          | Value type                | Values |
 |--------------|---------------------------|--------|
-| `permalinks` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its permalink format. |
+| `permalinks` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, or other array attribute like `tags` or `categories`) to its permalink format. |
 
 ##### Description
 
@@ -111,7 +111,9 @@ These variables are:
 * `:year` for year archives
 * `:year` and `:month` for month archives
 * `:year`, `:month`, and `:day` for day archives
-* `:name` for category and tag archives
+* `:name` for any other attribute archives (e.g. category or tag), contains the value of the attribute (e.g. `sample-posts`)
+* `:type` contains the name of the attribute (e.g. `category`)
+* `:collection` the name of the collection (e.g. `posts`)
 
 *Note:* trailing slashes are required to create the archive as an `index.html` file of a directory.
 
@@ -119,9 +121,9 @@ These variables are:
 
 ```yml
 permalinks:
-  year: '/archives/year/:year/'
-  month: '/archives/month/:year-:month/'
-  tag: '/archives/tag/:name/'
+  year: '/:collection/year/:year/'
+  month: '/:collection/:type/:year-:month/'
+  tag: '/:collection/:type/:name/'
 ```
 
 #### Slug Configuration

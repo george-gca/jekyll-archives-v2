@@ -13,7 +13,7 @@ In the case of a date archive, this attribute contains a Date object that can be
 The `page.documents` attribute contains an array of Document objects matching the archive criteria. You can iterate over this array just like any other Document array in Jekyll.
 
 #### Type (`page.type`)
-This attribute contains a simple string indicating the type of the layout being generated. Its value can be one of `tag`, `category`, `year`, `month`, or `day`.
+This attribute contains a simple string indicating the type of the layout being generated. Its value can be one of `year`, `month`, `day`, or any other array attribute like `tags` or `categories`.
 
 #### Collection name (`page.collection_name`)
 Contains the name of the collection being currently handled, as named in `_config.yml`.
@@ -25,6 +25,12 @@ The sample layouts were generated considering this configuration in `_config.yml
 collections:
   books:
     output: true
+
+jekyll-archives:
+  posts:
+    enabled: [year, tags, categories]
+  books:
+    enabled: [year, tags, categories]
 ```
 
 Note that, by default, Jekyll also generates the `posts` collection.
