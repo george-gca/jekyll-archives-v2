@@ -2,12 +2,12 @@
 
 ### Installation
 
-1. Add `gem 'jekyll-archives'` to your site's Gemfile
+1. Add `gem 'jekyll-archives-v2'` to your site's Gemfile
 2. Add the following to your site's `_config.yml`:
 
 ```yml
 plugins:
-  - jekyll-archives
+  - jekyll-archives-v2
 ```
 
 ### Configuration
