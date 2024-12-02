@@ -6,15 +6,15 @@ Archives configuration is done in the site's `_config.yml` file, under the `jeky
 
 ```yml
 jekyll-archives:
-  posts:
+  posts: # the collection name. The same name will be used by default in all permalinks
     enabled: []
     layout: archive
     permalinks:
-      year: '/:year/'
-      month: '/:year/:month/'
-      day: '/:year/:month/:day/'
-      tag: '/tag/:name/'
-      category: '/category/:name/'
+      year: '/COLLECTION/:year/'
+      month: '/COLLECTION/:year/:month/'
+      day: '/COLLECTION/:year/:month/:day/'
+      tag: '/COLLECTION/tag/:name/'
+      category: '/COLLECTION/category/:name/'
 ```
 
 ### Configuration options
