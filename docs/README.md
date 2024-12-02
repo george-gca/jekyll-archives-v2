@@ -2,19 +2,19 @@
 
 Automatically generate post archives by dates, tags, and categories.
 
-[![Gem Version](https://badge.fury.io/rb/jekyll-archives.svg)](http://badge.fury.io/rb/jekyll-archives)
+[![Gem Version](https://badge.fury.io/rb/jekyll-archives-v2.svg)](http://badge.fury.io/rb/jekyll-archives-v2)
 [![Build Status](https://travis-ci.org/jekyll/jekyll-archives.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-archives)
 
 ## Getting started
 
 ### Installation
 
-1. Add `gem 'jekyll-archives'` to your site's Gemfile
+1. Add `gem 'jekyll-archives-v2'` to your site's Gemfile
 2. Add the following to your site's `_config.yml`:
 
 ```yml
 plugins:
-  - jekyll-archives
+  - jekyll-archives-v2
 ```
 
 ### Configuration
