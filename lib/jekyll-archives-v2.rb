@@ -19,11 +19,10 @@ module Jekyll
             "layout"     => "archive",
             "enabled"    => [],
             "permalinks" => {
-              "year"     => "/#{name}/:year/",
-              "month"    => "/#{name}/:year/:month/",
-              "day"      => "/#{name}/:year/:month/:day/",
-              "tag"      => "/#{name}/tag/:name/",
-              "category" => "/#{name}/category/:name/",
+              "year"     => "/:collection/:year/",
+              "month"    => "/:collection/:year/:month/",
+              "day"      => "/:collection/:year/:month/:day/",
+              "tags"      => "/:collection/:type/:name/",
             },
           }
         end
@@ -57,55 +56,54 @@ module Jekyll
       end
 
       # Read archive data from collection
-      def read(collection_name)
-        if enabled?(collection_name, "tags")
-          read_tags(collection_name)
-        end
+      def read(collection)
+        if @config[collection]["enabled"].is_a?(Array)
+          if enabled?(collection, "year") || enabled?(collection, "month") || enabled?(collection, "day")
+            read_dates(collection)
+          end
 
-        if enabled?(collection_name, "categories")
-          read_categories(collection_name)
-        end
+          # read all attributes that are not year, month, or day
+          attributes = @config[collection]["enabled"].select { |attr| !["year", "month", "day"].include?(attr) }
 
-        if enabled?(collection_name, "year") || enabled?(collection_name, "month") || enabled?(collection_name, "day")
-          read_dates(collection_name)
+          attributes.each do |attr|
+            read_attrs(collection, attr)
+          end
+
+        elsif @config[collection]["enabled"] == true || @config[collection]["enabled"] == "all"
+          read_dates(collection)
+
+          # create a list of all attributes
+          attributes = @collections[collection].docs.flat_map { |doc| doc.data.keys }.uniq
+          # discard any attribute that is not an array
+          attributes.reject! { |attr| @collections[collection].docs.all? { |doc| !doc.data[attr].is_a?(Array) } }
+
+          attributes.each do |attr|
+            read_attrs(collection, attr)
+          end
         end
       end
 
-      def read_tags(collection_name)
-        tags(@collections[collection_name]).each do |title, documents|
-          @archives << Archive.new(@site, title, "tag", collection_name, documents)
+      def read_attrs(collection, attr)
+        doc_attr_hash(@collections[collection], attr).each do |title, documents|
+          @archives << Archive.new(@site, title, attr, collection, documents)
         end
       end
 
-      def read_categories(collection_name)
-        categories(@collections[collection_name]).each do |title, documents|
-          @archives << Archive.new(@site, title, "category", collection_name, documents)
-        end
-      end
-
-      def read_dates(collection_name)
-        years(@collections[collection_name]).each do |year, y_documents|
-          append_enabled_date_type({ :year => year }, "year", collection_name, y_documents)
+      def read_dates(collection)
+        years(@collections[collection]).each do |year, y_documents|
+          append_enabled_date_type({ :year => year }, "year", collection, y_documents)
           months(y_documents).each do |month, m_documents|
-            append_enabled_date_type({ :year => year, :month => month }, "month", collection_name, m_documents)
+            append_enabled_date_type({ :year => year, :month => month }, "month", collection, m_documents)
             days(m_documents).each do |day, d_documents|
-              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", collection_name, d_documents)
+              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", collection, d_documents)
             end
           end
         end
       end
 
       # Checks if archive type is enabled in config
-      def enabled?(collection_name, archive)
-        @config[collection_name]["enabled"] == true || @config[collection_name]["enabled"] == "all" || (@config[collection_name]["enabled"].is_a?(Array) && @config[collection_name]["enabled"].include?(archive))
-      end
-
-      def tags(documents)
-        doc_attr_hash(documents, "tags")
-      end
-
-      def categories(documents)
-        doc_attr_hash(documents, "categories")
+      def enabled?(collection, archive)
+        @config[collection]["enabled"] == true || @config[collection]["enabled"] == "all" || (@config[collection]["enabled"].is_a?(Array) && @config[collection]["enabled"].include?(archive))
       end
 
       # Custom `post_attr_hash` method for years
@@ -128,12 +126,12 @@ module Jekyll
       # Initialize a new Archive page and append to base array if the associated date `type`
       # has been enabled by configuration.
       #
-      # meta            - A Hash of the year / month / day as applicable for date.
-      # type            - The type of date archive.
-      # collection_name - the name of the collection
-      # documents       - The array of documents that belong in the date archive.
-      def append_enabled_date_type(meta, type, collection_name, documents)
-        @archives << Archive.new(@site, meta, type, collection_name, documents) if enabled?(collection_name, type)
+      # meta       - A Hash of the year / month / day as applicable for date.
+      # type       - The type of date archive.
+      # collection - the name of the collection
+      # documents  - The array of documents that belong in the date archive.
+      def append_enabled_date_type(meta, type, collection, documents)
+        @archives << Archive.new(@site, meta, type, collection, documents) if enabled?(collection, type)
       end
 
       # Custom `post_attr_hash` for date type archives.

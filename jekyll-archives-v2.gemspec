@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.3.0"
 
   s.add_dependency "jekyll", ">= 3.6", "< 5.0"
+  # support for singularize
+  s.add_dependency "activesupport"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "minitest"

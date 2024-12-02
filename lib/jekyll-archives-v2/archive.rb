@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'active_support/inflector'
 
 module Jekyll
   module ArchivesV2
@@ -20,12 +21,12 @@ module Jekyll
 
       # Initialize a new Archive page
       #
-      # site  - The Site object.
-      # title - The name of the tag/category or a Hash of the year/month/day in case of date.
-      #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
-      # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
+      # site            - The Site object.
+      # title           - The name of the tag/category or a Hash of the year/month/day in case of date.
+      #                   e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
+      # type            - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
       # collection_name - The name of the collection.
-      # documents - The array of documents that belong in this archive.
+      # documents       - The array of documents that belong in this archive.
       def initialize(site, title, type, collection_name, documents)
         @site   = site
         @documents  = documents
@@ -48,9 +49,9 @@ module Jekyll
 
       # The template of the permalink.
       #
-      # Returns the template String.
+      # Returns the template String as defined in config, else returns default template.
       def template
-        @config.dig("permalinks", type)
+        @config.dig("permalinks", type) || "/:collection/:type/:name/"
       end
 
       # The layout to use for rendering
@@ -64,9 +65,9 @@ module Jekyll
       # desired placeholder replacements. For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
-          @title.merge(:collection => @collection_name, :type => @type)
+          @title.merge(:collection => @collection_name, :type => @type.singularize)
         else
-          { :collection => @collection_name, :name => @slug, :type => @type }
+          { :collection => @collection_name, :name => @slug, :type => @type.singularize }
         end
       end
 
