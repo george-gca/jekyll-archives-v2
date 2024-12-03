@@ -90,8 +90,8 @@ layouts:
   year: year-archive
   month: month-archive
   day: day-archive
-  category: category-archive
-  tag: tag-archive
+  categories: category-archive
+  tags: tag-archive
 ```
 
 ---
@@ -123,7 +123,7 @@ These variables are:
 permalinks:
   year: '/:collection/year/:year/'
   month: '/:collection/:type/:year-:month/'
-  tag: '/:collection/:type/:name/'
+  tags: '/:collection/:type/:name/'
 ```
 
 #### Slug Configuration
