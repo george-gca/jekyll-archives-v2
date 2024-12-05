@@ -112,7 +112,7 @@ These variables are:
 * `:year` and `:month` for month archives
 * `:year`, `:month`, and `:day` for day archives
 * `:name` for any other attribute archives (e.g. category or tag), contains the value of the attribute (e.g. `sample-posts`)
-* `:type` contains the name of the attribute (e.g. `category`)
+* `:type` contains the name of the attribute, singularized (e.g. `category`). The singularization of the attribute name is handled by the [singularize](https://www.rubydoc.info/gems/activesupport/String:singularize) method from the ActiveSupport gem.
 * `:collection` the name of the collection (e.g. `posts`)
 
 *Note:* trailing slashes are required to create the archive as an `index.html` file of a directory.

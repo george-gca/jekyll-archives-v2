@@ -1,6 +1,6 @@
 # Layouts
 
-Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [type-specific layouts](./configuration.md#type-specific-layouts). 
+Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [type-specific layouts](./configuration.md#type-specific-layouts).
 
 ### Layout attributes
 #### Title (`page.title`)
@@ -13,7 +13,7 @@ In the case of a date archive, this attribute contains a Date object that can be
 The `page.documents` attribute contains an array of Document objects matching the archive criteria. You can iterate over this array just like any other Document array in Jekyll.
 
 #### Type (`page.type`)
-This attribute contains a simple string indicating the type of the layout being generated. Its value can be one of `year`, `month`, `day`, or any other array attribute like `tags` or `categories`.
+This attribute contains a simple string indicating the type of the layout being generated. Its value can be one of `year`, `month`, `day`, or any other array attribute. When not date-based, this string will be a singularized version of the attribute name. For example, if the archive is generated from the `tags` attribute, this attribute will be `tag`. The singularization of the attribute name is handled by the [singularize](https://www.rubydoc.info/gems/activesupport/String:singularize) method from the ActiveSupport gem.
 
 #### Collection name (`page.collection_name`)
 Contains the name of the collection being currently handled, as named in `_config.yml`.
