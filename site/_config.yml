@@ -1,0 +1,46 @@
+url: https://george-gca.github.io # the base hostname & protocol for your site
+baseurl: /jekyll-archives-v2 # the subpath of your site, e.g. /blog/. Leave blank for root
+
+# Build settings
+plugins:
+  - jekyll-archives-v2
+
+collections:
+  books:
+    output: true
+
+include: ["_pages"]
+
+exclude:
+  - .gitignore
+
+sass:
+  sourcemap: never
+  style: compressed
+
+# Markdown and syntax highlight
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    css_class: "highlight"
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+
+# -----------------------------------------------------------------------------
+# jekyll-archives-v2 settings
+# -----------------------------------------------------------------------------
+
+jekyll-archives:
+  books:
+    enabled: [year, tags, categories]
+  posts:
+    enabled: [year, tags, categories]
+    permalinks: # in this case, we wanted to replace /posts/ by /blog/
+      year: "/blog/:year/"
+      tags: "/blog/:type/:name/"
+      categories: "/blog/:type/:name/"

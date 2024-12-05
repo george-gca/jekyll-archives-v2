@@ -1,0 +1,23 @@
+---
+layout: base
+---
+<div>
+  {% if page.type == 'categories' %}
+    <h2>an archive of {{ page.collection_name }} in {{ page.title }} category</h2>
+  {% elsif page.type == 'year' %}
+    <h2>an archive of {{ page.collection_name }} from {{ page.date | date: '%Y' }}</h2>
+  {% elsif page.type == 'tags' %}
+    <h2>an archive of {{ page.collection_name }} with tag {{ page.title }}</h2>
+  {% endif %}
+
+  <table>
+    {% for document in page.documents %}
+      <tr>
+        <th>{{ document.date | date: '%b %d, %Y' }}</th>
+        <td>
+          <a href="{{ document.url | relative_url }}">{{ document.title }}</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
