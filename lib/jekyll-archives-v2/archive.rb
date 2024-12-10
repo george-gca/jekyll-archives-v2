@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'active_support/inflector'
+
+require "active_support/inflector"
 
 module Jekyll
   module ArchivesV2
@@ -28,8 +29,8 @@ module Jekyll
       # collection_name - The name of the collection.
       # documents       - The array of documents that belong in this archive.
       def initialize(site, title, type, collection_name, documents)
-        @site   = site
-        @documents  = documents
+        @site = site
+        @documents = documents
         @type   = type
         @title  = title
         @collection_name = collection_name

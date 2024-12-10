@@ -14,15 +14,15 @@ module Jekyll
 
       def initialize(config = {})
         defaults = {}
-        config.fetch("collections", {}).each do |name, collection|
+        config.fetch("collections", {}).each do |name, _collection|
           defaults[name] = {
             "layout"     => "archive",
             "enabled"    => [],
             "permalinks" => {
-              "year"     => "/:collection/:year/",
-              "month"    => "/:collection/:year/:month/",
-              "day"      => "/:collection/:year/:month/:day/",
-              "tags"      => "/:collection/:type/:name/",
+              "year"  => "/:collection/:year/",
+              "month" => "/:collection/:year/:month/",
+              "day"   => "/:collection/:year/:month/:day/",
+              "tags"  => "/:collection/:type/:name/",
             },
           }
         end
@@ -47,7 +47,7 @@ module Jekyll
         @site.config["jekyll-archives"] = @config
 
         # loop through collections keys and read them
-        @config.each do |collection_name, collection_config|
+        @config.each do |collection_name, _collection_config|
           read(collection_name)
         end
 
@@ -63,7 +63,7 @@ module Jekyll
           end
 
           # read all attributes that are not year, month, or day
-          attributes = @config[collection]["enabled"].select { |attr| !["year", "month", "day"].include?(attr) }
+          attributes = @config[collection]["enabled"].select { |attr| !%w(year month day).include?(attr) }
 
           attributes.each do |attr|
             read_attrs(collection, attr)
@@ -131,7 +131,9 @@ module Jekyll
       # collection - the name of the collection
       # documents  - The array of documents that belong in the date archive.
       def append_enabled_date_type(meta, type, collection, documents)
-        @archives << Archive.new(@site, meta, type, collection, documents) if enabled?(collection, type)
+        if enabled?(collection, type)
+          @archives << Archive.new(@site, meta, type, collection, documents)
+        end
       end
 
       # Custom `post_attr_hash` for date type archives.

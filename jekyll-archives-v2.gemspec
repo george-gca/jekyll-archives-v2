@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.licenses    = ["MIT"]
 
   # https://guides.rubygems.org/specification-reference/#metadata
-  s.metadata      = {
+  s.metadata = {
     "source_code_uri" => "https://github.com/george-gca/jekyll-archives-v2",
     "bug_tracker_uri" => "https://github.com/george-gca/jekyll-archives-v2/issues",
     "changelog_uri"   => "https://github.com/george-gca/jekyll-archives-v2/releases",
