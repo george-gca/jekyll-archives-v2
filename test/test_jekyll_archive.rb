@@ -6,7 +6,9 @@ class TestJekyllArchive < Minitest::Test
   context "the generated archive page" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => true,
+        "posts" => {
+          "enabled" => true,
+        },
       })
       @site.read
       Jekyll::ArchivesV2::Archives.new(@site.config).generate(@site)

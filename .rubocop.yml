@@ -13,8 +13,8 @@ AllCops:
 
 Layout/LineLength:
   Exclude:
-    - lib/jekyll-archives.rb
-    - lib/jekyll-archives/archive.rb
+    - lib/jekyll-archives-v2.rb
+    - lib/jekyll-archives-v2/archive.rb
     - test/**/*.rb
 
 Metrics/BlockLength:

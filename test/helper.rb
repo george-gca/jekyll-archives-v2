@@ -7,7 +7,7 @@ require "rubygems"
 require "minitest/autorun"
 require "shoulda/context"
 
-require_relative "../lib/jekyll-archives"
+require_relative "../lib/jekyll-archives-v2"
 
 SOURCE_DIR = File.expand_path("source", __dir__)
 DEST_DIR   = File.expand_path("destination", __dir__)
