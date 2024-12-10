@@ -5,17 +5,16 @@ require "helper"
 class TestJekyllArchive < Minitest::Test
   context "the generated archive page" do
     setup do
-      @site = fixture_site("collections" => {
-          "posts" => {
-            "output" => true,
-          },
-        },
-        "jekyll-archives" => {
-          "posts" => {
-            "enabled" => true,
-          },
-        }
-      )
+      @site = fixture_site("collections"     => {
+                             "posts" => {
+                               "output" => true,
+                             },
+                           },
+                           "jekyll-archives" => {
+                             "posts" => {
+                               "enabled" => true,
+                             },
+                           })
       @site.read
       Jekyll::ArchivesV2::Archives.new(@site.config).generate(@site)
       @archives = @site.config["archives"]

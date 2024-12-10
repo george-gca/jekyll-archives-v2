@@ -6,7 +6,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives-v2 plugin" do
     setup do
       @site = fixture_site(
-        "collections" => {
+        "collections"     => {
           "posts" => {
             "output" => true,
           },
@@ -68,7 +68,7 @@ class TestJekyllArchives < Minitest::Test
       # slug mode other than those expected by Jekyll returns the given string after
       # downcasing it.
       @site = fixture_site(
-        "collections" => {
+        "collections"     => {
           "posts" => {
             "output" => true,
           },
@@ -76,7 +76,7 @@ class TestJekyllArchives < Minitest::Test
         "jekyll-archives" => {
           "posts" => {
             "slug_mode" => "raw",
-            "enabled" => true,
+            "enabled"   => true,
           },
         }
       )
@@ -94,7 +94,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives-v2 plugin with custom layout path" do
     setup do
       @site = fixture_site(
-        "collections" => {
+        "collections"     => {
           "posts" => {
             "output" => true,
           },
@@ -119,7 +119,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives-v2 plugin with type-specific layout" do
     setup do
       @site = fixture_site(
-        "collections" => {
+        "collections"     => {
           "posts" => {
             "output" => true,
           },
@@ -146,15 +146,15 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives-v2 plugin with custom permalinks" do
     setup do
       @site = fixture_site(
-        "collections" => {
+        "collections"     => {
           "posts" => {
             "output" => true,
           },
         },
         "jekyll-archives" => {
           "posts" => {
-            "enabled" => true,
-            "permalinks"   => {
+            "enabled"    => true,
+            "permalinks" => {
               "year"       => "/:collection/year/:year/",
               "tags"       => "/tag-:name.html",
               "categories" => "/category-:name.html",
@@ -176,17 +176,16 @@ class TestJekyllArchives < Minitest::Test
 
   context "the archives" do
     setup do
-      @site = fixture_site("collections" => {
-          "posts" => {
-            "output" => true,
-          },
-        },
-        "jekyll-archives" => {
-          "posts" => {
-            "enabled" => true,
-          },
-        }
-      )
+      @site = fixture_site("collections"     => {
+                             "posts" => {
+                               "output" => true,
+                             },
+                           },
+                           "jekyll-archives" => {
+                             "posts" => {
+                               "enabled" => true,
+                             },
+                           })
       @site.process
     end
 
@@ -208,17 +207,16 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives-v2 plugin with enabled array" do
     setup do
-      @site = fixture_site("collections" => {
-          "posts" => {
-            "output" => true,
-          },
-        },
-        "jekyll-archives" => {
-          "posts" => {
-            "enabled" => ["tags"],
-          },
-        }
-      )
+      @site = fixture_site("collections"     => {
+                             "posts" => {
+                               "output" => true,
+                             },
+                           },
+                           "jekyll-archives" => {
+                             "posts" => {
+                               "enabled" => ["tags"],
+                             },
+                           })
       @site.process
     end
 
@@ -238,17 +236,16 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives-v2 plugin" do
     setup do
-      @site = fixture_site("collections" => {
-          "posts" => {
-            "output" => true,
-          },
-        },
-        "jekyll-archives" => {
-          "posts" => {
-            "enabled" => true,
-          },
-        }
-      )
+      @site = fixture_site("collections"     => {
+                             "posts" => {
+                               "output" => true,
+                             },
+                           },
+                           "jekyll-archives" => {
+                             "posts" => {
+                               "enabled" => true,
+                             },
+                           })
       @site.process
       @archives = @site.config["archives"]
       @tag_archive = @archives.detect { |a| a.type == "tags" }
