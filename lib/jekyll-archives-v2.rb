@@ -63,7 +63,7 @@ module Jekyll
           end
 
           # read all attributes that are not year, month, or day
-          attributes = @config[collection]["enabled"].select { |attr| !%w(year month day).include?(attr) }
+          attributes = @config[collection]["enabled"].reject { |attr| %w(year month day).include?(attr) }
 
           attributes.each do |attr|
             read_attrs(collection, attr)
