@@ -3,7 +3,7 @@
 Automatically generate post archives by dates, tags, and categories.
 
 [![Gem Version](https://badge.fury.io/rb/jekyll-archives-v2.svg)](http://badge.fury.io/rb/jekyll-archives-v2)
-[![Build Status](https://travis-ci.org/jekyll/jekyll-archives.svg?branch=main)](https://travis-ci.org/jekyll/jekyll-archives)
+[![Build Status](https://github.com/george-gca/jekyll-archives-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/george-gca/jekyll-archives-v2/actions/workflows/ci.yml)
 
 ## Getting started
 
