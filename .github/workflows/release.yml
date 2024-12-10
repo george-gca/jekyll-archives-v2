@@ -2,12 +2,12 @@ name: Release Gem
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
     paths: ["lib/**/version.rb"]
 
 jobs:
   release:
-    if: "github.repository_owner == 'jekyll'"
+    if: "github.repository_owner == 'george-gca'"
     name: "Release Gem (Ruby ${{ matrix.ruby_version }})"
     runs-on: "ubuntu-latest"
     strategy:
@@ -25,6 +25,6 @@ jobs:
       - name: Build and Publish Gem
         uses: ashmaroli/release-gem@dist
         with:
-          gemspec_name: "jekyll-archives"
+          gemspec_name: "jekyll-archives-v2"
         env:
           GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_GEM_PUSH_API_KEY }}
