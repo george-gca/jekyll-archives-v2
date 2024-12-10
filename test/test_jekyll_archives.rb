@@ -3,11 +3,20 @@
 require "helper"
 
 class TestJekyllArchives < Minitest::Test
-  context "the jekyll-archives plugin" do
+  context "the jekyll-archives-v2 plugin" do
     setup do
-      @site = fixture_site("jekyll-archives" => {
-        "enabled" => true,
-      })
+      @site = fixture_site(
+        "collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "enabled" => true,
+          },
+        }
+      )
       @site.read
       @archives = Jekyll::ArchivesV2::Archives.new(@site.config)
     end
@@ -15,53 +24,62 @@ class TestJekyllArchives < Minitest::Test
     should "generate archive pages by year" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "2014/index.html"
-      assert archive_exists? @site, "2013/index.html"
+      assert archive_exists? @site, "posts/2014/index.html"
+      assert archive_exists? @site, "posts/2013/index.html"
     end
 
     should "generate archive pages by month" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "2014/08/index.html"
-      assert archive_exists? @site, "2014/03/index.html"
+      assert archive_exists? @site, "posts/2014/08/index.html"
+      assert archive_exists? @site, "posts/2014/03/index.html"
     end
 
     should "generate archive pages by day" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "2014/08/17/index.html"
-      assert archive_exists? @site, "2013/08/16/index.html"
+      assert archive_exists? @site, "posts/2014/08/17/index.html"
+      assert archive_exists? @site, "posts/2013/08/16/index.html"
     end
 
     should "generate archive pages by tag" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "tag/test-tag/index.html"
-      assert archive_exists? @site, "tag/tagged/index.html"
-      assert archive_exists? @site, "tag/new/index.html"
+      assert archive_exists? @site, "posts/tag/test-tag/index.html"
+      assert archive_exists? @site, "posts/tag/tagged/index.html"
+      assert archive_exists? @site, "posts/tag/new/index.html"
     end
 
     should "generate archive pages by category" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "category/plugins/index.html"
+      assert archive_exists? @site, "posts/category/plugins/index.html"
     end
 
     should "generate archive pages with a layout" do
       @site.process
 
-      assert_equal "Test", read_file("tag/test-tag/index.html")
+      assert_equal "Test", read_file("posts/tag/test-tag/index.html")
     end
   end
 
-  context "the jekyll-archives plugin with a custom slug mode" do
+  context "the jekyll-archives-v2 plugin with a custom slug mode" do
     setup do
       # slug mode other than those expected by Jekyll returns the given string after
       # downcasing it.
-      @site = fixture_site("jekyll-archives" => {
-        "slug_mode" => "raw",
-        "enabled"   => true,
-      })
+      @site = fixture_site(
+        "collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "slug_mode" => "raw",
+            "enabled" => true,
+          },
+        }
+      )
       @site.read
       @archives = Jekyll::ArchivesV2::Archives.new(@site.config)
     end
@@ -69,33 +87,49 @@ class TestJekyllArchives < Minitest::Test
     should "generate slugs using the mode specified" do
       @archives.generate(@site)
 
-      assert archive_exists? @site, "category/💎/index.html"
+      assert archive_exists? @site, "posts/category/💎/index.html"
     end
   end
 
-  context "the jekyll-archives plugin with custom layout path" do
+  context "the jekyll-archives-v2 plugin with custom layout path" do
     setup do
-      @site = fixture_site("jekyll-archives" => {
-        "layout"  => "archive-too",
-        "enabled" => true,
-      })
+      @site = fixture_site(
+        "collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "layout"  => "archive-too",
+            "enabled" => true,
+          },
+        }
+      )
       @site.process
     end
 
     should "use custom layout" do
       @site.process
 
-      assert_equal "Test too", read_file("tag/test-tag/index.html")
+      assert_equal "Test too", read_file("posts/tag/test-tag/index.html")
     end
   end
 
-  context "the jekyll-archives plugin with type-specific layout" do
+  context "the jekyll-archives-v2 plugin with type-specific layout" do
     setup do
       @site = fixture_site(
+        "collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
         "jekyll-archives" => {
-          "enabled" => true,
-          "layouts" => {
-            "year" => "archive-too",
+          "posts" => {
+            "enabled" => true,
+            "layouts" => {
+              "year" => "archive-too",
+            },
           },
         }
       )
@@ -103,21 +137,28 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "use custom layout for specific type only" do
-      assert_equal "Test too", read_file("/2014/index.html")
-      assert_equal "Test too", read_file("/2013/index.html")
-      assert_equal "Test", read_file("/tag/test-tag/index.html")
+      assert_equal "Test too", read_file("/posts/2014/index.html")
+      assert_equal "Test too", read_file("/posts/2013/index.html")
+      assert_equal "Test", read_file("/posts/tag/test-tag/index.html")
     end
   end
 
-  context "the jekyll-archives plugin with custom permalinks" do
+  context "the jekyll-archives-v2 plugin with custom permalinks" do
     setup do
       @site = fixture_site(
+        "collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
         "jekyll-archives" => {
-          "enabled"    => true,
-          "permalinks" => {
-            "year"     => "/year/:year/",
-            "tag"      => "/tag-:name.html",
-            "category" => "/category-:name.html",
+          "posts" => {
+            "enabled" => true,
+            "permalinks"   => {
+              "year"       => "/:collection/year/:year/",
+              "tags"       => "/tag-:name.html",
+              "categories" => "/category-:name.html",
+            },
           },
         }
       )
@@ -125,8 +166,8 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "use the right permalink" do
-      assert archive_exists? @site, "year/2014/index.html"
-      assert archive_exists? @site, "year/2013/index.html"
+      assert archive_exists? @site, "posts/year/2014/index.html"
+      assert archive_exists? @site, "posts/year/2013/index.html"
       assert archive_exists? @site, "tag-test-tag.html"
       assert archive_exists? @site, "tag-new.html"
       assert archive_exists? @site, "category-plugins.html"
@@ -135,9 +176,17 @@ class TestJekyllArchives < Minitest::Test
 
   context "the archives" do
     setup do
-      @site = fixture_site("jekyll-archives" => {
-        "enabled" => true,
-      })
+      @site = fixture_site("collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "enabled" => true,
+          },
+        }
+      )
       @site.process
     end
 
@@ -146,7 +195,7 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
-  context "the jekyll-archives plugin with default config" do
+  context "the jekyll-archives-v2 plugin with default config" do
     setup do
       @site = fixture_site
       @site.process
@@ -157,37 +206,53 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
-  context "the jekyll-archives plugin with enabled array" do
+  context "the jekyll-archives-v2 plugin with enabled array" do
     setup do
-      @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["tags"],
-      })
+      @site = fixture_site("collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "enabled" => ["tags"],
+          },
+        }
+      )
       @site.process
     end
 
     should "generate the enabled archives" do
-      assert archive_exists? @site, "tag/test-tag/index.html"
-      assert archive_exists? @site, "tag/tagged/index.html"
-      assert archive_exists? @site, "tag/new/index.html"
+      assert archive_exists? @site, "posts/tag/test-tag/index.html"
+      assert archive_exists? @site, "posts/tag/tagged/index.html"
+      assert archive_exists? @site, "posts/tag/new/index.html"
     end
 
     should "not generate the disabled archives" do
-      refute archive_exists?(@site, "2014/index.html")
-      refute archive_exists?(@site, "2014/08/index.html")
-      refute archive_exists?(@site, "2013/08/16/index.html")
-      refute archive_exists?(@site, "category/plugins/index.html")
+      refute archive_exists?(@site, "posts/2014/index.html")
+      refute archive_exists?(@site, "posts/2014/08/index.html")
+      refute archive_exists?(@site, "posts/2013/08/16/index.html")
+      refute archive_exists?(@site, "posts/category/plugins/index.html")
     end
   end
 
-  context "the jekyll-archives plugin" do
+  context "the jekyll-archives-v2 plugin" do
     setup do
-      @site = fixture_site("jekyll-archives" => {
-        "enabled" => true,
-      })
+      @site = fixture_site("collections" => {
+          "posts" => {
+            "output" => true,
+          },
+        },
+        "jekyll-archives" => {
+          "posts" => {
+            "enabled" => true,
+          },
+        }
+      )
       @site.process
       @archives = @site.config["archives"]
-      @tag_archive = @archives.detect { |a| a.type == "tag" }
-      @category_archive = @archives.detect { |a| a.type == "category" }
+      @tag_archive = @archives.detect { |a| a.type == "tags" }
+      @category_archive = @archives.detect { |a| a.type == "categories" }
       @year_archive = @archives.detect { |a| a.type == "year" }
       @month_archive = @archives.detect { |a| a.type == "month" }
       @day_archive = @archives.detect { |a| a.type == "day" }
@@ -216,7 +281,7 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
-  context "the jekyll-archives plugin with a non-hash config" do
+  context "the jekyll-archives-v2 plugin with a non-hash config" do
     should "output a warning" do
       output = capture_output do
         site = fixture_site("jekyll-archives" => %w(apples oranges))
