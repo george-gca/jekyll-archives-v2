@@ -21,6 +21,15 @@ Metrics/BlockLength:
   Exclude:
     - test/**/*.rb
 
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ParameterLists:
+  Max: 5
+
 Minitest/AssertKindOf:
   Enabled: true
 Minitest/EmptyLineBeforeAssertionMethods:
