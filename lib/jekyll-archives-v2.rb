@@ -141,7 +141,7 @@ module Jekyll
       def date_attr_hash(documents, id)
         hash = Hash.new { |hsh, key| hsh[key] = [] }
         documents.each { |document| hash[document.date.strftime(id)] << document }
-        hash.each_value { |documents| documents.sort!.reverse! }
+        hash.each_value { |documents_in_hsh| documents_in_hsh.sort!.reverse! }
         hash
       end
 
@@ -154,7 +154,7 @@ module Jekyll
         # array of elements from collection ) then sort each array in reverse order.
         hash = Hash.new { |h, key| h[key] = [] }
         documents.docs.each { |document| document.data[doc_attr]&.each { |t| hash[t] << document } }
-        hash.each_value { |documents| documents.sort!.reverse! }
+        hash.each_value { |documents_in_hsh| documents_in_hsh.sort!.reverse! }
         hash
       end
     end
