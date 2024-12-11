@@ -1,6 +1,6 @@
 ## About Jekyll Archives
 
-Automatically generate post archives by dates, tags, and categories.
+Automatically generate collections archives by dates, tags, categories, or any other Array attribute.
 
 [![Gem Version](https://badge.fury.io/rb/jekyll-archives-v2.svg)](http://badge.fury.io/rb/jekyll-archives-v2)
 [![Tests](https://github.com/george-gca/jekyll-archives-v2/actions/workflows/test.yml/badge.svg)](https://github.com/george-gca/jekyll-archives-v2/actions/workflows/test.yml)
